@@ -1,0 +1,729 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Latitud — Fund Economics Analysis</title><link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&display=swap" rel="stylesheet"><style>
+  :root {
+    --olive: #A3B338;
+    --olive-light: #C8D44E;
+    --olive-bg: #f4f6e8;
+    --olive-bg-subtle: #f9faf2;
+    --dark: #1a1a1a;
+    --body: #3d3d3d;
+    --muted: #7a7a7a;
+    --faint: #b0b0b0;
+    --border: #e5e5e5;
+    --border-light: #f0f0f0;
+    --white: #ffffff;
+    --red: #d94f4f;
+    --red-bg: #fdf2f2;
+    --amber: #c47d15;
+    --green: #3a8a5c;
+    --green-bg: #edf7f1;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'DM Sans', -apple-system, sans-serif;
+    color: var(--dark);
+    background: var(--white);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .header {
+    border-bottom: 1px solid var(--border);
+    padding: 24px 0;
+    position: sticky;
+    top: 0;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(12px);
+    z-index: 100;
+  }
+  .header-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    font-size: 22px;
+    color: var(--dark);
+    text-decoration: none;
+  }
+  .logo-mark {
+    width: 28px;
+    height: 28px;
+    background: var(--olive);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+  }
+  .header-label {
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .container {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+  .hero {
+    padding: 72px 0 48px;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero h1 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 42px;
+    font-weight: 500;
+    line-height: 1.2;
+    color: var(--dark);
+    max-width: 720px;
+    margin-bottom: 24px;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--olive);
+  }
+  .hero-text {
+    font-size: 17px;
+    color: var(--body);
+    max-width: 680px;
+    line-height: 1.7;
+  }
+  .hero-text strong {
+    color: var(--dark);
+    font-weight: 600;
+  }
+  .funds-section {
+    padding: 56px 0 48px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--muted);
+    margin-bottom: 16px;
+    font-weight: 500;
+  }
+  .funds-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .fund-card {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px 20px;
+    transition: all 0.2s;
+  }
+  .fund-card.highlight {
+    border-color: var(--olive);
+    background: var(--olive-bg-subtle);
+  }
+  .fund-name {
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 12px;
+    color: var(--dark);
+  }
+  .fund-card.highlight .fund-name {
+    color: var(--olive);
+  }
+  .fund-stat {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: var(--body);
+    padding: 4px 0;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .fund-stat:last-child { border-bottom: none; }
+  .fund-stat-label { color: var(--muted); }
+  .fund-stat-value { font-weight: 500; }
+  .controls-bar {
+    padding: 32px 0 24px;
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  .control-group {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex: 1;
+    min-width: 260px;
+  }
+  .control-label {
+    font-size: 14px;
+    color: var(--muted);
+    white-space: nowrap;
+    min-width: 120px;
+  }
+  input[type="range"] {
+    flex: 1;
+    height: 4px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: var(--border);
+    border-radius: 2px;
+    outline: none;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--olive);
+    cursor: pointer;
+    border: 3px solid var(--white);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+  }
+  input[type="range"]::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--olive);
+    cursor: pointer;
+    border: 3px solid var(--white);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+  }
+  .control-value {
+    font-size: 15px;
+    font-weight: 600;
+    min-width: 56px;
+    text-align: right;
+    color: var(--dark);
+  }
+  .analysis-section {
+    padding: 56px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .analysis-section:last-child {
+    border-bottom: none;
+  }
+  .analysis-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--olive);
+    color: white;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 14px;
+  }
+  .analysis-title {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 28px;
+    font-weight: 500;
+    color: var(--dark);
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+  .analysis-desc {
+    font-size: 15px;
+    color: var(--muted);
+    max-width: 640px;
+    margin-bottom: 28px;
+    line-height: 1.6;
+  }
+  .btn-group {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+  .btn {
+    padding: 7px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--white);
+    color: var(--body);
+    cursor: pointer;
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    transition: all 0.15s;
+  }
+  .btn:hover {
+    border-color: var(--olive);
+    color: var(--olive);
+  }
+  .btn.active {
+    background: var(--olive-bg);
+    color: var(--olive);
+    border-color: var(--olive);
+    font-weight: 600;
+  }
+  .table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--white);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  th {
+    text-align: right;
+    padding: 14px 16px;
+    font-weight: 400;
+    color: var(--muted);
+    font-size: 13px;
+    border-bottom: 1px solid var(--border-light);
+    background: var(--white);
+  }
+  th:first-child { text-align: left; }
+  td {
+    text-align: right;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border-light);
+    color: var(--body);
+  }
+  td:first-child {
+    text-align: left;
+    font-weight: 500;
+    color: var(--dark);
+  }
+  tr:last-child td { border-bottom: none; }
+  .td-latitud {
+    font-weight: 600;
+    color: var(--olive) !important;
+  }
+  .td-impossible {
+    color: var(--red) !important;
+    font-weight: 500;
+  }
+  .td-hard {
+    color: var(--amber) !important;
+    font-weight: 500;
+  }
+  .td-green {
+    color: var(--green) !important;
+    font-weight: 500;
+  }
+  .cell-sub {
+    font-size: 11px;
+    color: var(--faint);
+    font-weight: 400;
+    display: block;
+    margin-top: 2px;
+  }
+  .bar-chart {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 24px;
+  }
+  .bar-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .bar-label {
+    min-width: 110px;
+    font-size: 13px;
+    text-align: right;
+    color: var(--body);
+  }
+  .bar-track {
+    flex: 1;
+    height: 32px;
+    background: var(--border-light);
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+  }
+  .bar-fill {
+    height: 100%;
+    border-radius: 8px;
+    transition: width 0.4s ease;
+    display: flex;
+    align-items: center;
+    padding-left: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    color: white;
+    min-width: 60px;
+  }
+  .bar-fill.latitud { background: var(--olive); }
+  .bar-fill.other { background: #c4c4c4; }
+  .bar-fill.impossible { background: var(--red); opacity: 0.25; }
+  .table-note {
+    font-size: 12px;
+    color: var(--faint);
+    margin-top: 12px;
+    line-height: 1.5;
+  }
+  .moic-big {
+    font-size: 20px;
+    font-weight: 700;
+  }
+  .footer {
+    padding: 40px 0;
+    text-align: center;
+    font-size: 13px;
+    color: var(--faint);
+    border-top: 1px solid var(--border);
+  }
+  @media (max-width: 768px) {
+    .funds-grid { grid-template-columns: repeat(2, 1fr); }
+    .hero h1 { font-size: 30px; }
+    .analysis-title { font-size: 24px; }
+    .controls-bar { flex-direction: column; gap: 16px; }
+    .container { padding: 0 20px; }
+  }
+  @media (max-width: 480px) {
+    .funds-grid { grid-template-columns: 1fr; }
+  }
+</style></head><body>
+
+<header class="header">
+  <div class="header-inner">
+    <a class="logo" href="#">
+      <div class="logo-mark">&#923;</div>
+      Latitud
+    </a>
+    <div class="header-label">Fund Economics</div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <h1>Why Latitud's fund structure is <em>built to outperform</em></h1>
+    <p class="hero-text">
+      Latitud enters at pre-seed valuations in Latin America — <strong>3–10x lower than comparable US funds</strong> — while its portfolio companies compete for the same global exit opportunities. Combined with a 35-company portfolio that provides more shots on goal, the result is a fund structure that requires dramatically fewer winners to deliver outsized returns. The analyses below compare Latitud to three typical fund archetypes using simple arithmetic — no probability models, just the math of entry pricing, ownership, and fund size.
+    </p>
+  </div>
+</section>
+
+<section class="funds-section">
+  <div class="container">
+    <div class="section-label">Fund Archetypes Compared</div>
+    <div class="funds-grid">
+      <div class="fund-card highlight">
+        <div class="fund-name">Latitud (Global LatAm)</div>
+        <div class="fund-stat"><span class="fund-stat-label">Fund size</span><span class="fund-stat-value">$50M</span></div>
+        <div class="fund-stat"><span class="fund-stat-label">Avg entry (post-money)</span><span class="fund-stat-value">$6M</span></div>
+        <div class="fund-stat"><span class="fund-stat-label">Target ownership</span><span class="fund-stat-value">10%</span></div>
+        <div class="fund-stat"><span class="fund-stat-label">Portfolio size</span><span class="fund-stat-value">35 companies</span></div>
+      </div>
+      <div class="fund-card">
+        <div class="fund-name">LatAm Seed Fund</div>
+        <div class="fund-stat"><span class="fund-stat-label">Fund size</span><span class="fund-stat-value">$100M</span></div>
+        <div class="fund-stat"><span class="fund-stat-label">Avg entry (post-money)</span><span class="fund-stat-value">$18M</span></div>
+        <div class="fund-stat"><span class="fund-stat-label">Target ownership</span><span class="fund-stat-value">17.5%</span></div>
+        <div class="fund-stat"><span class="fund-stat-label">Portfolio size</span><span class="fund-stat-value">20 companies</span></div>
+      </div>
+      <div class="fund-card">
+        <div class="fund-name">US Pre-seed Fund</div>
+        <div class="fund-stat"><span class="fund-stat-label">Fund size</span><span class="fund-stat-value">$150M</span></div>
+        <div class="fund-stat"><span class="fund-stat-label">Avg entry (post-money)</span><span class="fund-stat-value">$20M</span></div>
+        <div class="fund-stat"><span class="fund-stat-label">Target ownership</span><span class="fund-stat-value">15%</span></div>
+        <div class="fund-stat"><span class="fund-stat-label">Portfolio size</span><span class="fund-stat-value">30 companies</span></div>
+      </div>
+      <div class="fund-card">
+        <div class="fund-name">US Seed Fund</div>
+        <div class="fund-stat"><span class="fund-stat-label">Fund size</span><span class="fund-stat-value">$250M</span></div>
+        <div class="fund-stat"><span class="fund-stat-label">Avg entry (post-money)</span><span class="fund-stat-value">$60M</span></div>
+        <div class="fund-stat"><span class="fund-stat-label">Target ownership</span><span class="fund-stat-value">17.5%</span></div>
+        <div class="fund-stat"><span class="fund-stat-label">Portfolio size</span><span class="fund-stat-value">20 companies</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+  <div class="controls-bar">
+    <div class="control-group">
+      <span class="control-label">Exit valuation</span>
+      <input type="range" min="200" max="3000" value="1000" step="100" id="exitval">
+      <span class="control-value" id="ev-out">$1B</span>
+    </div>
+    <div class="control-group">
+      <span class="control-label">Dilution at exit</span>
+      <input type="range" min="20" max="80" value="60" step="5" id="dilution">
+      <span class="control-value" id="dil-out">60%</span>
+    </div>
+  </div>
+</div>
+
+<section class="analysis-section">
+  <div class="container">
+    <div class="analysis-num">1</div>
+    <h2 class="analysis-title">How many big exits to return the fund?</h2>
+    <p class="analysis-desc">
+      The simplest question in venture: how many portfolio companies need to produce a big exit for LPs to get their money back — and then some? Latitud's combination of low entry pricing and a smaller fund means it needs far fewer winners.
+    </p>
+    <div class="table-wrap" id="table1"></div>
+    <div class="table-note" id="note1"></div>
+  </div>
+</section>
+
+<section class="analysis-section">
+  <div class="container">
+    <div class="analysis-num">2</div>
+    <h2 class="analysis-title">Same portfolio outcomes, different fund returns</h2>
+    <p class="analysis-desc">
+      Imagine every fund's portfolio produced the exact same total exit enterprise value. Because of differences in fund size and ownership, the MOIC each fund delivers to LPs would be dramatically different. Latitud's smaller fund and efficient entry pricing means each dollar of exit value translates to a higher return.
+    </p>
+    <div class="btn-group" id="tev-btns"></div>
+    <div class="table-wrap" id="table2"></div>
+    <div id="bars2" style="margin-top:24px;"></div>
+  </div>
+</section>
+
+<section class="analysis-section">
+  <div class="container">
+    <div class="analysis-num">3</div>
+    <h2 class="analysis-title">What hit rate does each fund need?</h2>
+    <p class="analysis-desc">
+      By dividing the number of required big exits by the total portfolio size, we get a required "hit rate" — the percentage of companies that must produce a major outcome. This is a clean, model-free measure of how forgiving each fund's structure is.
+    </p>
+    <div class="table-wrap" id="table3"></div>
+    <div class="table-note" id="note3"></div>
+  </div>
+</section>
+
+<section class="analysis-section">
+  <div class="container">
+    <div class="analysis-num">4</div>
+    <h2 class="analysis-title">Relative difficulty vs Latitud</h2>
+    <p class="analysis-desc">
+      How many times harder is it for each fund type to hit a given return target, compared to Latitud? This ratio distills entry pricing, fund size, ownership, and portfolio construction into a single number. A higher multiple means that fund needs a proportionally higher share of winners — which is structurally harder to achieve.
+    </p>
+    <div class="btn-group" id="mult-btns"></div>
+    <div class="table-wrap" id="table4"></div>
+    <div id="bars4" style="margin-top:24px;"></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    Pure arithmetic — no probability models. Adjust the exit valuation and dilution sliders above to stress-test under different assumptions.<br>
+    Built for Latitud Fund.
+  </div>
+</footer>
+
+<script>
+const funds = [
+  { name: 'Latitud', size: 50, entry: 6, own: 0.10, portfolio: 35 },
+  { name: 'LatAm Seed', size: 100, entry: 18, own: 0.175, portfolio: 20 },
+  { name: 'US Pre-seed', size: 150, entry: 20, own: 0.15, portfolio: 30 },
+  { name: 'US Seed', size: 250, entry: 60, own: 0.175, portfolio: 20 },
+];
+const multiples = [1, 3, 5, 10];
+let selectedTEV = 1000;
+let selectedMult = 3;
+
+function fmtM(v) {
+  if (v >= 1000) return '$' + (v / 1000).toFixed(1).replace(/\.0$/, '') + 'B';
+  return '$' + Math.round(v) + 'M';
+}
+
+function initBtns() {
+  const tevs = [500, 1000, 2000, 5000];
+  const tevWrap = document.getElementById('tev-btns');
+  tevWrap.innerHTML = '';
+  tevs.forEach(v => {
+    const b = document.createElement('button');
+    b.className = 'btn' + (v === selectedTEV ? ' active' : '');
+    b.textContent = fmtM(v) + ' total EV';
+    b.id = 'tev-' + v;
+    b.onclick = () => { selectedTEV = v; updateTEVBtns(); update(); };
+    tevWrap.appendChild(b);
+  });
+  const multWrap = document.getElementById('mult-btns');
+  multWrap.innerHTML = '';
+  multiples.forEach(m => {
+    const b = document.createElement('button');
+    b.className = 'btn' + (m === selectedMult ? ' active' : '');
+    b.textContent = m + 'x fund';
+    b.id = 'mult-' + m;
+    b.onclick = () => { selectedMult = m; updateMultBtns(); update(); };
+    multWrap.appendChild(b);
+  });
+}
+
+function updateTEVBtns() {
+  [500, 1000, 2000, 5000].forEach(v => {
+    const b = document.getElementById('tev-' + v);
+    if (b) b.className = 'btn' + (v === selectedTEV ? ' active' : '');
+  });
+}
+
+function updateMultBtns() {
+  multiples.forEach(m => {
+    const b = document.getElementById('mult-' + m);
+    if (b) b.className = 'btn' + (m === selectedMult ? ' active' : '');
+  });
+}
+
+function makeTable(headers, rows) {
+  let h = '<table>';
+  h += '<tr>';
+  headers.forEach((hd, i) => {
+    h += '<th' + (i === 0 ? ' style="text-align:left"' : '') + '>' + hd + '</th>';
+  });
+  h += '</tr>';
+  rows.forEach(r => { h += r; });
+  h += '</table>';
+  return h;
+}
+
+function update() {
+  const exitV = parseInt(document.getElementById('exitval').value);
+  const dil = parseInt(document.getElementById('dilution').value) / 100;
+  document.getElementById('ev-out').textContent = fmtM(exitV);
+  document.getElementById('dil-out').textContent = Math.round(dil * 100) + '%';
+
+  const exitOwn = funds.map(f => f.own * (1 - dil));
+  const retPerExit = funds.map((f, i) => exitOwn[i] * exitV);
+
+  // TABLE 1
+  let rows1 = [];
+  multiples.forEach(m => {
+    let r = '<tr><td>' + m + 'x fund</td>';
+    funds.forEach((f, i) => {
+      const needed = Math.ceil((f.size * m) / retPerExit[i]);
+      const impossible = needed > f.portfolio;
+      const isLat = i === 0;
+      if (impossible) {
+        r += '<td class="td-impossible">Not possible<span class="cell-sub">needs ' + needed + ', has ' + f.portfolio + '</span></td>';
+      } else {
+        const pct = Math.round((needed / f.portfolio) * 100);
+        r += '<td class="' + (isLat ? 'td-latitud' : '') + '">' + needed + '<span class="cell-sub">' + pct + '% of portfolio</span></td>';
+      }
+    });
+    r += '</tr>';
+    rows1.push(r);
+  });
+  document.getElementById('table1').innerHTML = makeTable(
+    ['Return target', ...funds.map(f => f.name)], rows1
+  );
+  document.getElementById('note1').textContent = 'At ' + fmtM(exitV) + ' exit, ' + Math.round(dil * 100) + '% dilution. Per-exit return: ' + funds.map((f, i) => f.name + ' ' + fmtM(Math.round(retPerExit[i]))).join(' · ');
+
+  // TABLE 2
+  const moics = funds.map((f, i) => (exitOwn[i] * selectedTEV) / f.size);
+  let rows2 = [];
+
+  let r2a = '<tr><td>Fund size</td>';
+  funds.forEach(f => { r2a += '<td>' + fmtM(f.size) + '</td>'; });
+  r2a += '</tr>';
+  rows2.push(r2a);
+
+  let r2b = '<tr><td>Ownership at exit</td>';
+  funds.forEach((f, i) => { r2b += '<td>' + (exitOwn[i] * 100).toFixed(1) + '%</td>'; });
+  r2b += '</tr>';
+  rows2.push(r2b);
+
+  let r2c = '<tr><td>LP proceeds</td>';
+  funds.forEach((f, i) => { r2c += '<td>' + fmtM(Math.round(exitOwn[i] * selectedTEV)) + '</td>'; });
+  r2c += '</tr>';
+  rows2.push(r2c);
+
+  let r2d = '<tr><td style="font-weight:600">MOIC</td>';
+  funds.forEach((f, i) => {
+    const isLat = i === 0;
+    r2d += '<td class="' + (isLat ? 'td-latitud' : '') + '"><span class="moic-big">' + moics[i].toFixed(1) + 'x</span></td>';
+  });
+  r2d += '</tr>';
+  rows2.push(r2d);
+
+  document.getElementById('table2').innerHTML = makeTable(
+    ['', ...funds.map(f => f.name)], rows2
+  );
+
+  const maxMoic = Math.max(...moics);
+  let b2 = '<div class="bar-chart">';
+  funds.forEach((f, i) => {
+    const pct = Math.max(3, (moics[i] / maxMoic) * 100);
+    const cls = i === 0 ? 'latitud' : 'other';
+    b2 += '<div class="bar-row"><div class="bar-label" style="' + (i === 0 ? 'font-weight:600' : '') + '">' + f.name + '</div>';
+    b2 += '<div class="bar-track"><div class="bar-fill ' + cls + '" style="width:' + pct + '%">' + moics[i].toFixed(1) + 'x</div></div></div>';
+  });
+  b2 += '</div>';
+  document.getElementById('bars2').innerHTML = b2;
+
+  // TABLE 3
+  const hitData = multiples.map(m => funds.map((f, i) => {
+    const needed = Math.ceil((f.size * m) / retPerExit[i]);
+    return { needed, rate: needed / f.portfolio, impossible: needed > f.portfolio, portfolio: f.portfolio };
+  }));
+
+  let rows3 = [];
+  hitData.forEach((row, mi) => {
+    let r = '<tr><td>' + multiples[mi] + 'x fund</td>';
+    row.forEach((d, i) => {
+      const isLat = i === 0;
+      if (d.impossible) {
+        r += '<td class="td-impossible">Impossible<span class="cell-sub">needs ' + d.needed + ' of ' + d.portfolio + '</span></td>';
+      } else {
+        const pct = Math.round(d.rate * 100);
+        const oneIn = Math.floor(1 / d.rate);
+        r += '<td class="' + (isLat ? 'td-latitud' : '') + '">' + pct + '%<span class="cell-sub">' + d.needed + ' of ' + d.portfolio + (oneIn >= 2 ? ' · 1 in ' + oneIn : '') + '</span></td>';
+      }
+    });
+    r += '</tr>';
+    rows3.push(r);
+  });
+  document.getElementById('table3').innerHTML = makeTable(
+    ['Return target', ...funds.map(f => f.name)], rows3
+  );
+
+  // TABLE 4
+  const mi = multiples.indexOf(selectedMult);
+  let rows4 = [];
+  hitData.forEach((row, mi2) => {
+    const lr = row[0].rate;
+    let r = '<tr><td>' + multiples[mi2] + 'x fund</td>';
+    for (let fi = 1; fi < funds.length; fi++) {
+      if (row[fi].impossible) {
+        r += '<td class="td-impossible">Not possible</td>';
+      } else {
+        const ratio = row[fi].rate / lr;
+        let cls = '';
+        if (ratio >= 5) cls = 'td-impossible';
+        else if (ratio >= 3) cls = 'td-hard';
+        r += '<td class="' + cls + '">' + ratio.toFixed(1) + 'x harder<span class="cell-sub">needs ' + Math.round(row[fi].rate * 100) + '% vs ' + Math.round(lr * 100) + '%</span></td>';
+      }
+    }
+    r += '</tr>';
+    rows4.push(r);
+  });
+  document.getElementById('table4').innerHTML = makeTable(
+    ['Return target', 'vs LatAm Seed', 'vs US Pre-seed', 'vs US Seed'], rows4
+  );
+
+  const row4 = hitData[mi];
+  const maxRate = Math.max(...row4.filter(d => !d.impossible).map(d => d.rate), 0.01);
+  let b4 = '<div style="font-size:14px;font-weight:500;color:var(--dark);margin-bottom:12px;">Required hit rate to return ' + selectedMult + 'x</div>';
+  b4 += '<div class="bar-chart">';
+  row4.forEach((d, i) => {
+    const pct = d.impossible ? 100 : Math.max(3, (d.rate / maxRate) * 100);
+    const cls = i === 0 ? 'latitud' : (d.impossible ? 'impossible' : 'other');
+    const label = d.impossible ? 'Impossible' : Math.round(d.rate * 100) + '%';
+    b4 += '<div class="bar-row"><div class="bar-label" style="' + (i === 0 ? 'font-weight:600' : '') + '">' + funds[i].name + '</div>';
+    b4 += '<div class="bar-track"><div class="bar-fill ' + cls + '" style="width:' + pct + '%">' + label + '</div></div></div>';
+  });
+  b4 += '</div>';
+  document.getElementById('bars4').innerHTML = b4;
+}
+
+document.getElementById('exitval').addEventListener('input', update);
+document.getElementById('dilution').addEventListener('input', update);
+initBtns();
+update();
+</script>
+</body></html>
